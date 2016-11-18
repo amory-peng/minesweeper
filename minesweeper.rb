@@ -25,7 +25,7 @@ class Minesweeper
     board.render
     pos = prompt_player
     prompt_action(pos)
-    check_game_end(pos)
+
   end
 
   def prompt_player
@@ -38,6 +38,7 @@ class Minesweeper
     input = $stdin.gets.chomp.upcase
     if input == "R"
       board.reveal(pos)
+      check_game_end(pos)
     elsif input == "S"
       save_game
     else
@@ -58,10 +59,11 @@ class Minesweeper
   end
 
   def lost?(pos)
-    board[pos].bomb
+    board[pos].bomb unless board[pos].flagged
   end
 
   def check_game_end(pos)
+
     if lost?(pos)
       board.reveal_bombs
       puts "You lost!"
